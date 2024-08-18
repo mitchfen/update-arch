@@ -39,7 +39,7 @@ func main() {
 	fmt.Println(commandOutput)
 
 	writeSection("Updating flatpak packages...")
-	commandOutput, err = runCommand("flatpak", "update", "--force")
+	commandOutput, err = runCommand("flatpak", "update", "--noninteractive")
 	if err != nil {
 		fmt.Println(err)
 	}
