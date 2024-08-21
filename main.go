@@ -20,7 +20,8 @@ func main() {
 	helpers.WriteSection("Removing orphan pacman packages...")
 	commandOutput, _ = helpers.RunCommand("sudo", "pacman", "-Qdt", "--noconfirm")
 	if commandOutput != "" {
-		commandOutput, err = helpers.RunCommand("sudo", "pacman", "-Rns", commandOutput)
+		fmt.Println("Removing orphan packages: ", commandOutput)
+		commandOutput, err = helpers.RunCommand("sudo", "pacman", "-Rns$(sudo pacman -Qdt)")
 	} else {
 		fmt.Println("No orphan packages to remove.")
 	}
@@ -56,6 +57,4 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Printf("\nFlatpak packages: %d", strings.Count(commandOutput, "\n"))
-
-	// TODO: Update ohmyposh by after checking ~/.oh-my-posh-version.txt
 }
