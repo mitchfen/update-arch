@@ -60,9 +60,9 @@ func UpdateAurPackages(aurPath string) error {
 				fmt.Printf("%s is already up to date\n", dirEntry.Name())
 			} else {
 				fmt.Printf("%s is being updated...\n", dirEntry.Name())
-				_, err = RunCommand("makepkg", "-si")
+				_, err = RunCommand("makepkg", "-si", "--noconfirm")
 				if err != nil {
-					return fmt.Errorf("failed to execute makepkg -si: %w", err)
+					return fmt.Errorf("failed to execute makepkg: %w", err)
 				}
 
 				// Execute `git clean -fxd`
