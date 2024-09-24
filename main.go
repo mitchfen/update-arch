@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/mitchfen/update-arch/helpers"
 	"strings"
+
+	"github.com/mitchfen/update-arch/helpers"
 )
 
-const biosVersionScriptPath = "/home/mitchfen/dev/scripts_and_configs/scripts/getLatestBiosVersion.py"
+const biosVersionScriptPath = "./getLatestBiosVersion.py"
 const aurPath = "/home/mitchfen/aur"
 
 func main() {
@@ -34,6 +35,12 @@ func main() {
 	fmt.Println(commandOutput)
 
 	helpers.WriteSection("Checking for latest BIOS version...")
+	// Python script may fail to resolve DNS so let's populate the cache
+	commandOutput, err = helpers.RunCommand("drill", "asrock.com")
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Check for BIOS updates
 	commandOutput, err = helpers.RunCommand("python", biosVersionScriptPath)
 	if err != nil {
 		fmt.Println(err)
