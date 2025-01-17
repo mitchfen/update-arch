@@ -22,7 +22,7 @@ func main() {
 	commandOutput, _ = helpers.RunCommand("sudo", "pacman", "-Qdt", "--noconfirm")
 	if commandOutput != "" {
 		fmt.Println("Removing orphan packages: ", commandOutput)
-		commandOutput, err = helpers.RunCommand("sudo", "pacman", "-Rns$(sudo pacman -Qdt)")
+		commandOutput, err = helpers.RunCommand("sudo", "pacman", "-R $(sudo pacman -Qdt) --noconfirm")
 	} else {
 		fmt.Println("No orphan packages to remove.")
 	}
